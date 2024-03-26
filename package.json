@@ -83,7 +83,7 @@
         "node-id3": "^0.2.3",
         "node-superfetch": "^0.1.11",
         "node-webpmux": "^3.1.0",
-        "node-youtube-music": "^0.7.0",
+        "node-youtube-music": "^0.10.3",
         "openai": "^3.2.0",
         "os": "^0.1.2",
         "path": "^0.12.7",
