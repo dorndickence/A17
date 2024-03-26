@@ -81,7 +81,7 @@
         "node-cron": "^3.0.0",
         "node-fetch": "^2.6.1",
         "node-id3": "^0.2.3",
-        "node-superfetch": "^0.1.11",
+        "node-superfetch": "^0.3.3",
         "node-webpmux": "^3.1.0",
         "node-youtube-music": "^0.7.0",
         "openai": "^3.2.0",
