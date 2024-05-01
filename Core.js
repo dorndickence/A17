@@ -347,15 +347,30 @@ module.exports = A17 = async (A17, m, chatUpdate, store) => {
 
 
 
-    //Dm and Groups Autoreply/Bot chat
-    /*
-    if (!isCmd && !m.isGroup){
-        const botreply = await axios.get(`http://api.brainshop.ai/get?bid=166512&key=5nz1Ha6nS9Zx1MfT&uid=[uid]&msg=[msg]=[${budy}]`)
-        txt = `${botreply.data.cnt}`
-        m.reply(txt)
-        }    
+  // Dm and Groups Autoreply/Bot chat
+if (!isCmd && (!m.isGroup || m.body.startsWith('.bot'))) {
+    try {
+        const response = await axios.get(`https://worker-dry-cloud-dorn.dorndickence.workers.dev/?prompt=${encodeURIComponent(budy)}`);
         
-     */
+        // Check if response is successful and contains data
+        if (response.status === 200 && response.data && response.data.length > 0) {
+            // Parse JSON response
+            const responseData = response.data[0];
+
+            // Extract the response text
+            const responseText = responseData.response.response;
+
+            m.reply(responseText);
+        } else {
+            // Handle error response or empty data
+            m.reply("Oops! Something went wrong with the response.");
+        }
+    } catch (error) {
+        // Handle error if request fails
+        console.error("Error fetching data:", error);
+        m.reply("Oops! Something went wrong while fetching data.");
+    }
+}
 
 
 
