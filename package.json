@@ -74,7 +74,7 @@
         "lowdb": "^2.1.0",
         "mal-scraper": "^2.11.4",
         "marker": "^0.1.2",
-        "mathjs": "^9.4.4",
+        "mathjs": "^12.4.1",
         "moment-timezone": "^0.5.34",
         "mongoose": "^6.2.1",
         "mumaker": "^1.0.0",
