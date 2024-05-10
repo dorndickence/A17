@@ -40,7 +40,7 @@
         "@whiskeysockets/baileys": "^6.5.0",
         "anime-wallpaper": "^1.1.1",
         "awesome-phonenumber": "^2.70.0",
-        "axios": "^0.28.0",
+        "axios": "^1.6.8",
         "canvacord": "^6.0.2",
         "cfonts": "^2.9.0",
         "chalk": "^4.1.2",
