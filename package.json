@@ -39,7 +39,7 @@
         "@shineiichijo/marika": "^2.0.6",
         "@whiskeysockets/baileys": "^6.5.0",
         "anime-wallpaper": "^1.1.1",
-        "awesome-phonenumber": "^2.70.0",
+        "awesome-phonenumber": "^6.7.0",
         "axios": "^0.28.0",
         "canvacord": "^6.0.2",
         "cfonts": "^2.9.0",
