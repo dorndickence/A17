@@ -365,20 +365,32 @@ module.exports = A17 = async (A17, m, chatUpdate, store) => {
 
 
 
+// Import node-fetch
+const fetch = require('node-fetch');
+
+
 // DM autoreply
-if (!isCmd && !m.isGroup) {
+if (!isCmd && !m.isGroup && budy) {
   try {
+    console.log('Auto-reply triggered with message:', budy);
+
     const encodedMessage = encodeURIComponent(budy);
-    const response = await axios.get(`https://worker-dry-cloud-dorn.dorndickence.workers.dev/?prompt=${encodedMessage}`);
-    
+    const response = await fetch(`https://worker-dry-cloud-dorn.dorndickence.workers.dev/?prompt=${encodedMessage}`);
+    const data = await response.json();
+
+    console.log('Response from API:', data);
+
     // Check the response structure
-    const botReply = response.data?.response?.response || "Sorry, I couldn't understand your message.";
-    
+    const botReply = data?.response?.response || "Sorry, I couldn't understand your message.";
+
+    console.log('Replying with:', botReply);
     m.reply(botReply);
   } catch (error) {
     console.error('Error fetching the bot reply:', error);
     m.reply("There was an error processing your request.");
   }
+} else {
+  console.log('Message ignored. isCmd:', isCmd, 'm.isGroup:', m.isGroup, 'budy:', budy);
 }
 
 
