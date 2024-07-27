@@ -361,71 +361,15 @@ module.exports = A17 = async (A17, m, chatUpdate, store) => {
 
 
 
+//dm autoreply
 
+if (!isCmd && !m.isGroup){
+   const encodedMessage = encodeURIComponent(budy);
+   const botreply = await axios.get(`https://worker-dry-cloud-dorn.dorndickence.workers.dev/?prompt=${encodedMessage}`);
 
-
-
-const axios = require('axios');
-
-async function handleAutoReply(m) {
-    const { isCmd, isGroup, budy, reply } = m;
-
-    // Ensure the reply function is available
-    if (typeof reply !== 'function') {
-        console.error('reply function is not defined or not a function');
-        return;
-    }
-
-    try {
-        // Check if the message is not a command and not in a group
-        if (!isCmd && !isGroup) {
-            // Log the incoming message body for debugging
-            console.log(`Received message: ${budy}`);
-
-            // Properly encode the message content
-            const encodedMessage = encodeURIComponent(budy);
-
-            // Make the axios request to your endpoint
-            const botreply = await axios.get(`https://worker-dry-cloud-dorn.dorndickence.workers.dev/?prompt=${encodedMessage}`);
-
-            // Log the entire response for debugging
-            console.log(`Bot reply response: ${JSON.stringify(botreply.data)}`);
-
-            // Check if botreply.data and botreply.data.response.response exist
-            if (botreply.data && botreply.data.response && botreply.data.response.response) {
-                const txt = botreply.data.response.response;
-                console.log(`Sending reply: ${txt}`);
-                await reply(txt); // Ensure reply is awaited
-                console.log('Reply sent successfully');
-            } else {
-                console.error('botreply.data.response.response is undefined');
-                await reply('Sorry, I didn’t understand that. Can you please rephrase?');
-            }
-        }
-    } catch (error) {
-        // Log the error
-        console.error('Error handling message:', error);
-        await reply('An error occurred while processing your request. Please try again later.');
-    }
-}
-
-// Example usage
-const exampleMessage = {
-    isCmd: false,
-    isGroup: false,
-    budy: 'Hello',
-    chat: 'exampleChatId',
-    reply: (text, chatId = 'exampleChatId', options = {}) => {
-        const conn = {
-            sendText: (chatId, text, m, options) => console.log(`Sending text to ${chatId}: ${text}`),
-            sendMedia: (chatId, media, filename, caption, m, options) => console.log(`Sending media to ${chatId}`)
-        };
-        return Buffer.isBuffer(text) ? conn.sendMedia(chatId, text, 'file', '', exampleMessage, { ...options }) : conn.sendText(chatId, text, exampleMessage, { ...options });
-    }
-};
-
-handleAutoReply(exampleMessage);
-
+   txt = `${botreply.data.cnt}`
+  m.reply(txt)
+  }
 
 
 
