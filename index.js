@@ -215,6 +215,23 @@ const startA17  = async () => {
     });
 
 
+     A17.ev.on('message', async (msg) => {
+    if (!msg.isGroupMsg) {
+        await handleAutoReply({
+            isCmd: false,
+            isGroup: msg.isGroupMsg,
+            budy: msg.body,
+            chat: msg.from,
+            reply: (text, chatId = msg.from, options = {}) => {
+                return Buffer.isBuffer(text)
+                    ? client.sendMedia(chatId, text, 'file', '', msg, { ...options })
+                    : client.sendText(chatId, text, msg, { ...options });
+            }
+        });
+    }
+});
+
+
     /* 
    A17.ev.on('groups.update', async pea => {
        
