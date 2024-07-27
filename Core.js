@@ -361,6 +361,8 @@ module.exports = A17 = async (A17, m, chatUpdate, store) => {
 
 
 
+
+
 async function handleMessage(m) {
     const { isCmd, isGroup, budy } = m;
 
@@ -379,9 +381,10 @@ async function handleMessage(m) {
             // Log the entire response for debugging
             console.log(`Bot reply response: ${JSON.stringify(botreply.data)}`);
             
-            // Check if botreply.data and botreply.data.cnt exist
+            // Check if botreply.data and botreply.data.response.response exist
             if (botreply.data && botreply.data.response && botreply.data.response.response) {
                 const txt = botreply.data.response.response;
+                console.log(`Sending reply: ${txt}`);
                 m.reply(txt);
             } else {
                 console.error('botreply.data.response.response is undefined');
@@ -397,6 +400,7 @@ async function handleMessage(m) {
 
 // Example usage
 handleMessage({ isCmd: false, isGroup: false, budy: 'Hello', reply: console.log });
+
 
 
 
