@@ -363,13 +363,24 @@ module.exports = A17 = async (A17, m, chatUpdate, store) => {
 
 //dm autoreply
 
-if (!isCmd && !m.isGroup){
-   const encodedMessage = encodeURIComponent(budy);
-   const botreply = await axios.get(`https://worker-dry-cloud-dorn.dorndickence.workers.dev/?prompt=${encodedMessage}`);
 
-   txt = `${botreply.data.cnt}`
-  m.reply(txt)
+
+// DM autoreply
+if (!isCmd && !m.isGroup) {
+  try {
+    const encodedMessage = encodeURIComponent(budy);
+    const response = await axios.get(`https://worker-dry-cloud-dorn.dorndickence.workers.dev/?prompt=${encodedMessage}`);
+    
+    // Check the response structure
+    const botReply = response.data?.response?.response || "Sorry, I couldn't understand your message.";
+    
+    m.reply(botReply);
+  } catch (error) {
+    console.error('Error fetching the bot reply:', error);
+    m.reply("There was an error processing your request.");
   }
+}
+
 
 
 
