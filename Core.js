@@ -363,10 +363,17 @@ module.exports = A17 = async (A17, m, chatUpdate, store) => {
 
 
 
-const axios = require('axios');
 
-async function handleMessage(m) {
-    const { isCmd, isGroup, budy } = m;
+
+// Autoreply/Bot chat function
+async function handleAutoReply(m) {
+    const { isCmd, isGroup, budy, reply } = m;
+
+    // Ensure the reply function is available
+    if (typeof reply !== 'function') {
+        console.error('reply function is not defined or not a function');
+        return;
+    }
 
     try {
         // Check if the message is not a command and not in a group
@@ -387,22 +394,27 @@ async function handleMessage(m) {
             if (botreply.data && botreply.data.response && botreply.data.response.response) {
                 const txt = botreply.data.response.response;
                 console.log(`Sending reply: ${txt}`);
-                m.reply(txt);
+                await reply(txt); // Ensure reply is awaited
                 console.log('Reply sent successfully');
             } else {
                 console.error('botreply.data.response.response is undefined');
-                m.reply('Sorry, I didn’t understand that. Can you please rephrase?');
+                await reply('Sorry, I didn’t understand that. Can you please rephrase?');
             }
         }
     } catch (error) {
         // Log the error
         console.error('Error handling message:', error);
-        m.reply('An error occurred while processing your request. Please try again later.');
+        await reply('An error occurred while processing your request. Please try again later.');
     }
 }
 
 // Example usage
-handleMessage({ isCmd: false, isGroup: false, budy: 'Hello', reply: console.log });
+handleAutoReply({
+    isCmd: false,
+    isGroup: false,
+    budy: 'Hello',
+    reply: console.log // Replace with actual reply function in your environment
+});
 
 
 
