@@ -365,18 +365,23 @@ module.exports = A17 = async (A17, m, chatUpdate, store) => {
 
 
 
+
+
 // Import node-fetch
 const fetch = require('node-fetch');
 
+// Define budy
+var budy = (typeof m.text === 'string' ? m.text : '');
 
 // Replace this with the actual identifier for your bot
-const botIdentifier = '254759245741';
+const botIdentifier = '254759245741@s.whatsapp.net';
 
 // DM autoreply
-if (m.sender !== botIdentifier && !isCmd && !m.isGroup && budy) {
+if (!isCmd && !m.isGroup && budy && m.sender !== botIdentifier) {
   try {
     console.log('Auto-reply triggered with message:', budy);
-
+    console.log('Sender:', m.sender);
+    
     const encodedMessage = encodeURIComponent(budy);
     const response = await fetch(`https://worker-dry-cloud-dorn.dorndickence.workers.dev/?prompt=${encodedMessage}`);
     const data = await response.json();
@@ -393,7 +398,7 @@ if (m.sender !== botIdentifier && !isCmd && !m.isGroup && budy) {
     m.reply("There was an error processing your request.");
   }
 } else {
-  console.log('Message ignored. m.sender:', m.sender, 'isCmd:', isCmd, 'm.isGroup:', m.isGroup, 'budy:', budy);
+  console.log('Message ignored. Sender:', m.sender, 'isCmd:', isCmd, 'm.isGroup:', m.isGroup, 'budy:', budy);
 }
 
 
