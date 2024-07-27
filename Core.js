@@ -365,7 +365,8 @@ module.exports = A17 = async (A17, m, chatUpdate, store) => {
 
 
 
-// Autoreply/Bot chat function
+const axios = require('axios');
+
 async function handleAutoReply(m) {
     const { isCmd, isGroup, budy, reply } = m;
 
@@ -409,12 +410,22 @@ async function handleAutoReply(m) {
 }
 
 // Example usage
-handleAutoReply({
+const exampleMessage = {
     isCmd: false,
     isGroup: false,
     budy: 'Hello',
-    reply: console.log // Replace with actual reply function in your environment
-});
+    chat: 'exampleChatId',
+    reply: (text, chatId = 'exampleChatId', options = {}) => {
+        const conn = {
+            sendText: (chatId, text, m, options) => console.log(`Sending text to ${chatId}: ${text}`),
+            sendMedia: (chatId, media, filename, caption, m, options) => console.log(`Sending media to ${chatId}`)
+        };
+        return Buffer.isBuffer(text) ? conn.sendMedia(chatId, text, 'file', '', exampleMessage, { ...options }) : conn.sendText(chatId, text, exampleMessage, { ...options });
+    }
+};
+
+handleAutoReply(exampleMessage);
+
 
 
 
