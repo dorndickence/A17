@@ -15,9 +15,9 @@ const { addBalance } = require("./lib/limit.js");
 const { smsg, formatp, tanggal, GIFBufferToVideoBuffer, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, format, parseMention, getRandom, fetchBuffer } = require('./lib/myfunc')
 const _ = require("lodash");
 const yargs = require("yargs/yargs");
-const kaitime = moment.tz('Africa/kenya').format('HH:mm:ss');
-const kaidate = moment.tz('Africa/kenya').format('DD/MM/YYYY');
-const time2 = moment().tz('Africa/kenya').format('HH:mm:ss');
+const kaitime = moment.tz('Kenya/Nairobi').format('HH:mm:ss');
+const kaidate = moment.tz('kenya/Nairobi').format('DD/MM/YYYY');
+const time2 = moment().tz('kenya/Nairobi').format('HH:mm:ss');
 const currentDate = new Date();
 const options = { weekday: 'long' }; // Specify 'long' to get the full day name
 const currentDay = new Intl.DateTimeFormat('en-US', options).format(currentDate);
@@ -363,6 +363,8 @@ module.exports = A17 = async (A17, m, chatUpdate, store) => {
 
 
 
+const axios = require('axios');
+
 async function handleMessage(m) {
     const { isCmd, isGroup, budy } = m;
 
@@ -371,21 +373,22 @@ async function handleMessage(m) {
         if (!isCmd && !isGroup) {
             // Log the incoming message body for debugging
             console.log(`Received message: ${budy}`);
-            
+
             // Properly encode the message content
             const encodedMessage = encodeURIComponent(budy);
-            
+
             // Make the axios request to your endpoint
             const botreply = await axios.get(`https://worker-dry-cloud-dorn.dorndickence.workers.dev/?prompt=${encodedMessage}`);
-            
+
             // Log the entire response for debugging
             console.log(`Bot reply response: ${JSON.stringify(botreply.data)}`);
-            
+
             // Check if botreply.data and botreply.data.response.response exist
             if (botreply.data && botreply.data.response && botreply.data.response.response) {
                 const txt = botreply.data.response.response;
                 console.log(`Sending reply: ${txt}`);
                 m.reply(txt);
+                console.log('Reply sent successfully');
             } else {
                 console.error('botreply.data.response.response is undefined');
                 m.reply('Sorry, I didn’t understand that. Can you please rephrase?');
